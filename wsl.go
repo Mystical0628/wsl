@@ -292,7 +292,6 @@ func (w *WSL) checkCuddlingMaxAllowed(
 	}
 
 	numStmtsAbove := w.numberOfStatementsAbove(cursor)
-	previousIdents := w.identsFromNode(previousNode, true)
 
 	// If we don't have any statements above, we only care about potential error
 	// cuddling (for if statements) so check that.
@@ -318,54 +317,43 @@ func (w *WSL) checkCuddlingMaxAllowed(
 		return
 	}
 
-	checkIntersection := func(other []*ast.Ident) bool {
-		anyIntersects := identIntersection(previousIdents, other)
-		if len(anyIntersects) > 0 {
-			// We have matches, but too many statements above.
-			if maxAllowedStatements != -1 && numStmtsAbove > maxAllowedStatements {
-				w.addErrorTooManyStatements(previousNode.Pos(), cursor.checkType)
-			}
-
-			return true
-		}
-
-		return false
-	}
+	availableIdents := append(allowedIdents, w.identsFromNode(stmt, true)...)
 
 	// FEATURE(AllowWholeBlock): Allow identifier used anywhere in block
 	// (including recursive blocks).
 	if w.config.AllowWholeBlock {
-		allIdentsInBlock := w.identsFromNode(stmt, false)
-		if checkIntersection(allIdentsInBlock) {
-			return
-		}
+		availableIdents = append(availableIdents, w.identsFromNode(stmt, false)...)
 	}
 
 	// FEATURE(AllowFirstInBlock): Allow identifiers used first in block.
 	if !w.config.AllowWholeBlock && w.config.AllowFirstInBlock {
-		firstStmtIdents := w.identsFromNode(firstBlockStmt, true)
-		if checkIntersection(firstStmtIdents) {
-			return
+		availableIdents = append(availableIdents, w.identsFromNode(firstBlockStmt, true)...)
+	}
+
+	// Retrieve all idents from all cuddling previous statements. Starts from 2 because already have one previousNode
+	defer cursor.Save()()
+	currentStmt := stmt
+	for aboveStmtNum := 1; aboveStmtNum <= numStmtsAbove; aboveStmtNum++ {
+		if cursor.Previous() {
+			previousStmt := cursor.Stmt()
+			previousIdents := w.identsFromNode(previousStmt, true)
+
+			if len(identIntersection(previousIdents, availableIdents)) == 0 {
+				w.addErrorNoIntersection(currentStmt.Pos(), cursor.checkType)
+				return
+			}
+
+			currentStmt = previousStmt
+		} else {
+			log.Println("ERROR while retrieving previous statement")
+			break
+		}
+
+		if maxAllowedStatements != -1 && aboveStmtNum > maxAllowedStatements {
+			w.addErrorTooManyStatements(stmt.Pos(), cursor.checkType)
+			break
 		}
 	}
-
-	currentIdents := w.identsFromNode(stmt, true)
-	if checkIntersection(currentIdents) {
-		return
-	}
-
-	if checkIntersection(allowedIdents) {
-		return
-	}
-
-	intersects := identIntersection(currentIdents, previousIdents)
-	if len(intersects) > 0 {
-		return
-	}
-
-	// We're cuddled but the line immediately above doesn't contain any
-	// variables used in this statement.
-	w.addErrorNoIntersection(stmt.Pos(), cursor.checkType)
 }
 
 func (w *WSL) checkCuddlingWithoutIntersection(stmt ast.Node, cursor *Cursor) {
@@ -1158,7 +1146,12 @@ func (w *WSL) maybeCheckBlock(
 			allowedIdents = w.identsFromCaseArms(node)
 		}
 
-		w.checkCuddlingBlock(node, blockList, allowedIdents, cursor, 1)
+		maxAllowedStatements := 1
+		if check == CheckFor || check == CheckRange {
+			maxAllowedStatements = w.config.MaxAllowedStatementsAboveBlock
+		}
+
+		w.checkCuddlingBlock(node, blockList, allowedIdents, cursor, maxAllowedStatements)
 	}
 }
 

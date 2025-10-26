@@ -52,7 +52,7 @@ func fn() {
 
 func fn2() {
 	a := 1
-	b := Fn() // want `missing whitespace above this line \(too many statements above defer\)`
+	b := Fn() // want `missing whitespace above this line \(no shared variables above defer\)`
 	defer b.Close()
 
 	_ = a

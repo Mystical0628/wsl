@@ -41,7 +41,7 @@ func fn3(in any) {
 
 func fn4(in any) {
 	a := Fn()
-	b := Fn() // want `missing whitespace above this line \(too many statements above type-switch\)`
+	b := Fn() // want `missing whitespace above this line \(no shared variables above type-switch\)`
 	switch b.(type) {
 	case string:
 		return

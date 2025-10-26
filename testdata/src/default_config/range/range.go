@@ -2,7 +2,7 @@ package testpkg
 
 func fn1() {
 	a := []int{}
-	b := []int{} // want `missing whitespace above this line \(too many statements above range\)`
+	b := []int{} // want `missing whitespace above this line \(no shared variables above range\)`
 	for range b {
 		panic(1)
 	}

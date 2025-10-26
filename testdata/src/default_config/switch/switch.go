@@ -11,7 +11,7 @@ func fn0() {
 
 func fn1() {
 	a := 1
-	b := 2 // want `missing whitespace above this line \(too many statements above switch\)`
+	b := 2 // want `missing whitespace above this line \(no shared variables above switch\)`
 	switch b {
 	case 1:
 	case 2:
@@ -63,8 +63,8 @@ func fn5() {
 	}
 
 	timeout2 := 20
-	timeout3 := 30 // want `missing whitespace above this line \(too many statements above switch\)`
-	switch {
+	timeout3 := 30
+	switch { // want `missing whitespace above this line \(too many statements above switch\)`
 	case timeout2 > 5:
 		timeout = 100
 	case timeout3 == 10:

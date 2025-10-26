@@ -50,7 +50,7 @@ func Go() {
 
 	multiCuddle1 := NewT()
 
-	multiCuddle2 := NewT() // want `missing whitespace above this line \(too many statements above go\)`
+	multiCuddle2 := NewT() // want `missing whitespace above this line \(no shared variables above go\)`
 	go multiCuddle2()
 
 	t4 := NewT()

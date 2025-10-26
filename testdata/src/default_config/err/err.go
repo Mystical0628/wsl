@@ -49,7 +49,7 @@ func multiAssignSplit() {
 
 func alreadyCuddledErrReportsOther() {
 	a := 1
-	err := errors.New("x") // want `missing whitespace above this line \(too many statements above if\)`
+	err := errors.New("x") // want `missing whitespace above this line \(no shared variables above if\)`
 	if err != nil {
 		panic(err)
 	}

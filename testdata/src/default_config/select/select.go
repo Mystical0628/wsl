@@ -49,8 +49,8 @@ func cuddledUsed(ch1 chan struct{}) {
 	}
 
 	ch2 := make(chan struct{})
-	ch3 := make(chan struct{}) // want `missing whitespace above this line \(too many statements above select\)`
-	select {
+	ch3 := make(chan struct{})
+	select { // want `missing whitespace above this line \(too many statements above select\)`
 	case <-ch1:
 		_ = 1
 	case <-ch2:

@@ -2,7 +2,7 @@ package testpkg
 
 func keepCuddledVar() {
 	a := 1
-	b := 2 // want `missing whitespace above this line \(too many statements above for\)`
+	b := 2 // want `missing whitespace above this line \(no shared variables above for\)`
 	for i := 0; i < b; i++ {
 		panic(1)
 	}

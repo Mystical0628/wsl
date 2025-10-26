@@ -24,7 +24,7 @@ func fn2() {
 
 func fn3() {
 	a := 1
-	b := 2
+	b := 2 // want `missing whitespace above this line \(no shared variables above expr\)`
 	fmt.Println(b)
 	c := 3 // want `missing whitespace above this line \(invalid statement above assign\)`
 	d := 4

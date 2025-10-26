@@ -1,6 +1,6 @@
 # wsl - whitespace linter
 
-[![GitHub Actions](https://github.com/bombsimon/wsl/actions/workflows/go.yml/badge.svg)](https://github.com/bombsimon/wsl/actions/workflows/go.yml)
+[![GitHub Actions](https://github.com/Mystical0628/wsl/actions/workflows/go.yml/badge.svg)](https://github.com/Mystical0628/wsl/actions/workflows/go.yml)
 [![Coverage Status](https://coveralls.io/repos/github/bombsimon/wsl/badge.svg?branch=main)](https://coveralls.io/github/bombsimon/wsl?branch=main)
 
 `wsl` (**w**hite**s**pace **l**inter) is a linter that wants you to use empty
@@ -99,10 +99,10 @@ in more details.
 
 ```sh
 # Latest release
-go install github.com/bombsimon/wsl/v5/cmd/wsl@latest
+go install github.com/Mystical0628/wsl/v1/cmd/wsl@latest
 
 # Main branch
-go install github.com/bombsimon/wsl/v5/cmd/wsl@main
+go install github.com/Mystical0628/wsl/v1/cmd/wsl@main
 ```
 
 ## Usage

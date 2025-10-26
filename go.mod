@@ -1,4 +1,4 @@
-module github.com/bombsimon/wsl/v5
+module github.com/Mystical0628/wsl/v1
 
 go 1.23.0
 

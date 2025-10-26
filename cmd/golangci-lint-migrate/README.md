@@ -19,7 +19,7 @@ golangci-lint-migrate .golangci.yml
 These settings are the closest you can get in the new version of `wsl`
 Potential deprecations are logged above
 
-See https://github.com/bombsimon/wsl for more details
+See https://github.com/Mystical0628/wsl for more details
 
 linters:
   settings:
@@ -55,5 +55,5 @@ See [repo] and [checks] for details but in short, this is the change:
 - **error-variable-names** - Deprecated, we allow everything impl. `error`
 - **force-short-decl-cuddling** - Converted to a check called `assign-exclusive`
 
-[repo]: https://github.com/bombsimon/wsl/blob/main/README.md
-[checks]: https://github.com/bombsimon/wsl/blob/main/CHECKS.md
+[repo]: https://github.com/Mystical0628/wsl/blob/main/README.md
+[checks]: https://github.com/Mystical0628/wsl/blob/main/CHECKS.md

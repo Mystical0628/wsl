@@ -7,7 +7,7 @@ import (
 	"os"
 	"slices"
 
-	"github.com/bombsimon/wsl/v5"
+	"github.com/Mystical0628/wsl/v1"
 	"gopkg.in/yaml.v3"
 )
 
@@ -151,7 +151,7 @@ func main() {
 	fmt.Println("These settings are the closest you can get in the new version of `wsl`")
 	fmt.Println("Potential deprecations are logged above")
 	fmt.Println("")
-	fmt.Println("See https://github.com/bombsimon/wsl for more details")
+	fmt.Println("See https://github.com/Mystical0628/wsl for more details")
 	fmt.Println("")
 
 	fmt.Println(buf.String())

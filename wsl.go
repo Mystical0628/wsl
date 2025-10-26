@@ -7,6 +7,7 @@ import (
 	"go/format"
 	"go/token"
 	"go/types"
+	"log"
 
 	"golang.org/x/tools/go/analysis"
 )
@@ -337,6 +338,13 @@ func (w *WSL) checkCuddlingMaxAllowed(
 		if cursor.Previous() {
 			previousStmt := cursor.Stmt()
 			previousIdents := w.identsFromNode(previousStmt, true)
+
+			//// We're cuddled but not with an assign, declare or defer statement which is
+			//// never allowed.
+			//if !nodeIsAssignDeclOrIncDec(previousStmt) && !currIsDefer {
+			//	w.addErrorInvalidTypeCuddle(currentStmt.Pos(), cursor.checkType)
+			//	return
+			//}
 
 			if len(identIntersection(previousIdents, availableIdents)) == 0 {
 				w.addErrorNoIntersection(currentStmt.Pos(), cursor.checkType)

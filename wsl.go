@@ -1329,8 +1329,10 @@ func identIntersection(a, b []*ast.Ident) []*ast.Ident {
 	return intersects
 }
 
-func isTypeOrPredeclConst(obj types.Object) bool {
+func isTypeOrFuncOrPredeclConst(obj types.Object) bool {
 	switch o := obj.(type) {
+	case *types.Func:
+		return true
 	case *types.TypeName:
 		// Covers predeclared types ("string", "int", ...) and user types.
 		return true
@@ -1407,7 +1409,7 @@ func (w *WSL) identsFromNode(node ast.Node, skipBlock bool) []*ast.Ident {
 			return true
 		}
 
-		if isTypeOrPredeclConst(typesObject) {
+		if isTypeOrFuncOrPredeclConst(typesObject) {
 			return true
 		}
 

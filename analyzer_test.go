@@ -100,6 +100,14 @@ func TestWithConfig(t *testing.T) {
 				config.Checks.Add(CheckAppend)
 			},
 		},
+		{
+			subdir: "max_allowed_statements_above_block",
+			configFn: func(config *Configuration) {
+				config.AllowWholeBlock = true
+				config.MaxAllowedStatementsAboveBlock = 3
+				config.MaxAllowedStatementsAboveIfBlock = 3
+			},
+		},
 	} {
 		t.Run(tc.subdir, func(t *testing.T) {
 			config := NewConfig()

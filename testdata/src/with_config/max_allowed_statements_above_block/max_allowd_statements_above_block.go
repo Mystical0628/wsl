@@ -1,0 +1,91 @@
+package max_allowed_statements_above_block
+
+func FnRet(a int) int { return a }
+
+func fn1() {
+	a := 1
+	b := 0
+	c := 0
+	for range make([]int, 10) {
+		if true {
+			b++
+			c = FnRet(a)
+		}
+	}
+	FnRet(c) // want `missing whitespace above this line \(invalid statement above expr\)`
+}
+
+func fn2() {
+	a := 1
+	b := 0
+	c := FnRet(a)
+	d := true
+	for range make([]int, 10) { // want `missing whitespace above this line \(too many statements above range\)`
+		if d {
+			b++
+			c = FnRet(a)
+		}
+	}
+
+	FnRet(c)
+}
+
+func fn3() {
+	a := 1
+	unused := FnRet(5)
+	c := FnRet(unused) // want `missing whitespace above this line \(no shared variables above range\)`
+	d := true
+	for range make([]int, 10) {
+		if d {
+			c++
+
+			FnRet(a)
+		}
+	}
+
+	FnRet(unused)
+}
+
+func fn4() {
+	a := 1
+	b := 0
+	c := 0
+	if a > b {
+		if true {
+			b++
+			c = FnRet(a)
+		}
+	}
+	FnRet(c) // want `missing whitespace above this line \(invalid statement above expr\)`
+}
+
+func fn5() {
+	a := 1
+	b := FnRet(a)
+	c := 0
+	d := true
+	if a > b { // want `missing whitespace above this line \(too many statements above if\)`
+		if d {
+			b++
+			c = FnRet(a)
+		}
+	}
+
+	FnRet(c)
+}
+
+func fn6() {
+	a := 1
+	unused := FnRet(5)
+	c := FnRet(unused) // want `missing whitespace above this line \(no shared variables above if\)`
+	d := true
+	if a > c {
+		if d {
+			c++
+
+			FnRet(a)
+		}
+	}
+
+	FnRet(unused)
+}

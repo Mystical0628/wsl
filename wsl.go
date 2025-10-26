@@ -783,7 +783,7 @@ func (w *WSL) checkIf(stmt *ast.IfStmt, cursor *Cursor, isElse bool) {
 
 	if _, ok := w.config.Checks[CheckIf]; !isElse && ok {
 		cursor.SetChecker(CheckIf)
-		w.checkCuddlingBlock(stmt, stmt.Body.List, []*ast.Ident{}, cursor, 1)
+		w.checkCuddlingBlock(stmt, stmt.Body.List, []*ast.Ident{}, cursor, w.config.MaxAllowedStatementsAboveIfBlock)
 	} else if _, ok := w.config.Checks[CheckErr]; !isElse && ok {
 		previousNode := cursor.PreviousNode()
 

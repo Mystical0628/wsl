@@ -28,15 +28,15 @@ func Register(settings any) (register.LinterPlugin, error) {
 }
 
 type PluginSettings struct {
-	AllowFirstInBlock                bool     `mapstructure:"allow-first-in-block"`
-	AllowWholeBlock                  bool     `mapstructure:"allow-whole-block"`
+	AllowFirstInBlock                bool     `json:"allow-first-in-block"`
+	AllowWholeBlock                  bool     `json:"allow-whole-block"`
 	MaxAllowedStatementsAboveBlock   int      `json:"max-allowed-statements-above-block"`
 	MaxAllowedStatementsAboveIfBlock int      `json:"max-allowed-statements-above-if-block"`
-	BranchMaxLines                   int      `mapstructure:"branch-max-lines"`
-	CaseMaxLines                     int      `mapstructure:"case-max-lines"`
-	Default                          string   `mapstructure:"default"`
-	Enable                           []string `mapstructure:"enable"`
-	Disable                          []string `mapstructure:"disable"`
+	BranchMaxLines                   int      `json:"branch-max-lines"`
+	CaseMaxLines                     int      `json:"case-max-lines"`
+	Default                          string   `json:"default"`
+	Enable                           []string `json:"enable"`
+	Disable                          []string `json:"disable"`
 }
 
 func NewPluginSettings() PluginSettings {

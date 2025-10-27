@@ -7,7 +7,7 @@ import (
 	"os"
 	"slices"
 
-	"github.com/Mystical0628/wsl/v1"
+	"github.com/Mystical0628/wsl"
 	"gopkg.in/yaml.v3"
 )
 

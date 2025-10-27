@@ -1,4 +1,4 @@
-module github.com/Mystical0628/wsl/v1
+module github.com/Mystical0628/wsl
 
 go 1.23.0
 

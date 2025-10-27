@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/Mystical0628/wsl/v1"
+	"github.com/Mystical0628/wsl"
 	"golang.org/x/tools/go/analysis/singlechecker"
 )
 

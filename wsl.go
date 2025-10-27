@@ -311,8 +311,8 @@ func (w *WSL) checkCuddlingMaxAllowed(
 
 	_, currIsDefer := stmt.(*ast.DeferStmt)
 
-	// We're cuddled but not with an assign, declare or defer statement which is
-	// never allowed.
+	// We're cuddled but not with an assign, declare or inc/dec statement which is
+	// never allowed (except before defer).
 	if !nodeIsAssignDeclOrIncDec(previousNode) && !currIsDefer {
 		w.addErrorInvalidTypeCuddle(cursor.Stmt().Pos(), cursor.checkType)
 		return
@@ -339,8 +339,8 @@ func (w *WSL) checkCuddlingMaxAllowed(
 			previousStmt := cursor.Stmt()
 			previousIdents := w.identsFromNode(previousStmt, true)
 
-			//// We're cuddled but not with an assign, declare or defer statement which is
-			//// never allowed.
+			//// We're cuddled but not with an assign, declare or inc/dec statement which is
+			//// never allowed (except before defer).
 			//if !nodeIsAssignDeclOrIncDec(previousStmt) && !currIsDefer {
 			//	w.addErrorInvalidTypeCuddle(currentStmt.Pos(), cursor.checkType)
 			//	return
